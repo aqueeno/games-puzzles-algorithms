@@ -17,7 +17,9 @@ current_ch = '?' # current cell
 seen_ch = '*'    # seen cell
 # here are the Cartesian shifts that give us a cell's neighbours
 #   1st position is row index, 2nd psn is column index
-nbr_offsets = [(0,-1), (0,1), (-1,0), (1,0)]
+# nbr_offsets = [(0,-1), (0,1), (-1,0), (1,0)]
+nbr_offsets = [(-1,0), (1,0), (0,-1), (0,1) ] # up down left right
+
 
 def newstring(s,index,ch):  # replace character in string
   return s[0:index]+ch+s[index+1:]
@@ -85,7 +87,7 @@ class Maze:
       if self.char_at(psn) == empty_ch:
         self.mark_location(psn,current_ch)
       self.showpretty()
-      shuffle(nbr_offsets) # if you don't shuffle you might get stuck
+      # shuffle(nbr_offsets) # if you don't shuffle you might get stuck
       for shift in nbr_offsets:
         new_psn = psn[0]+shift[0],psn[1]+shift[1]
         new_ch = self.char_at(new_psn)
@@ -100,6 +102,6 @@ class Maze:
 
 maze = Maze() # Maze() calls __init__(maze) of class Maze
 startpsn = maze.find_start() # scan the maze to find the origin location
-shuffle(nbr_offsets)
-psn = maze.iwander(startpsn) # return the value found by recursive wandering
+# shuffle(nbr_offsets)
+psn = maze.rwander(startpsn) # return the value found by recursive wandering
 print('finish at location',psn) # print the destination location
